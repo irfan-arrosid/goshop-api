@@ -132,3 +132,45 @@ func UserUpdate(c *fiber.Ctx) error {
 		"data":    user,
 	})
 }
+
+func UserUpdateEmail(c *fiber.Ctx) error {
+	userRequest := new(requests.UserEmailRequest)
+
+	if err := c.BodyParser(userRequest); err != nil {
+		return c.Status(400).JSON(fiber.Map{
+			"message": "Bad request",
+		})
+	}
+
+	var user entities.User
+	var isEmailUserExist entities.User
+
+	userId := c.Params("id")
+
+	err := database.DB.First(&user, "id = ?", userId).Error
+	if err != nil {
+		return c.Status(404).JSON(fiber.Map{
+			"message": "User not found",
+		})
+	}
+
+	errCheckEmail := database.DB.First(&isEmailUserExist, "email = ?", userRequest.Email).Error
+	if errCheckEmail == nil {
+		return c.Status(402).JSON(fiber.Map{
+			"message": "Email already used",
+		})
+	}
+
+	user.Email = userRequest.Email
+	errUpdate := database.DB.Save(&user).Error
+	if errUpdate != nil {
+		return c.Status(500).JSON(fiber.Map{
+			"message": "Internal server error",
+			"data":    user,
+		})
+	}
+	return c.JSON(fiber.Map{
+		"message": "User update success",
+		"data":    user,
+	})
+}

@@ -11,4 +11,5 @@ func UserRoutes(r *fiber.App) {
 	r.Get("/user", handlers.UserGetAll)
 	r.Get("/user/:id", handlers.UserGetById)
 	r.Put("/user/:id", handlers.UserUpdate)
+	r.Put("/user/:id/update-email", handlers.UserUpdateEmail)
 }
