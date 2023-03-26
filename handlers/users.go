@@ -169,8 +169,33 @@ func UserUpdateEmail(c *fiber.Ctx) error {
 			"data":    user,
 		})
 	}
+
 	return c.JSON(fiber.Map{
 		"message": "User update success",
 		"data":    user,
+	})
+}
+
+func UserDelete(c *fiber.Ctx) error {
+	userId := c.Params("id")
+
+	var user entities.User
+
+	err := database.DB.First(&user, "id = ?", userId).Error
+	if err != nil {
+		return c.Status(404).JSON(fiber.Map{
+			"message": "User not found",
+		})
+	}
+
+	errDelete := database.DB.Debug().Delete(&user).Error
+	if errDelete != nil {
+		return c.Status(500).JSON(fiber.Map{
+			"message": "Internal server error",
+		})
+	}
+
+	return c.JSON(fiber.Map{
+		"message": "User was deleted",
 	})
 }
