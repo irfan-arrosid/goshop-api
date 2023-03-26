@@ -62,8 +62,8 @@ func UserCreate(c *fiber.Ctx) error {
 }
 
 func UserGetAll(c *fiber.Ctx) error {
-	userInfo := c.Locals("userInfo")
-	log.Println("user info data :: ", userInfo)
+	// userInfo := c.Locals("userInfo")
+	// log.Println("user info data :: ", userInfo)
 
 	var users []entities.User
 	result := database.DB.Find(&users)
@@ -71,4 +71,50 @@ func UserGetAll(c *fiber.Ctx) error {
 		log.Println(result.Error)
 	}
 	return c.JSON(users)
+}
+
+func UserGetById(c *fiber.Ctx) error {
+	userId := c.Params("id")
+
+	var user entities.User
+
+	err := database.DB.First(&user, "id = ?", userId).Error
+	if err != nil {
+		return c.Status(404).JSON(fiber.Map{
+			"message": "User not found",
+		})
+	}
+
+	return c.JSON(fiber.Map{
+		"message": "Request is success",
+		"data":    user,
+	})
+}
+
+func UserUpdate(c *fiber.Ctx) error {
+	userRequest := new(requests.UserUpdateRequest)
+
+	if err := c.BodyParser(userRequest); err != nil {
+		return c.Status(400).JSON(fiber.Map{
+			"message": "Bad request",
+		})
+	}
+
+	var user entities.User
+
+	userId := c.Params("id")
+
+	err := database.DB.First(&user, "id = ?", userId).Error
+	if err != nil {
+		return c.Status(404).JSON(fiber.Map{
+			"message": "User not found",
+		})
+	}
+
+	if userRequest.Nama != "" {
+		user.Nama = userRequest.Nama
+	}
+	user.Notelp = userRequest.Notelp
+	user.Tanggal_lahir = userRequest.Tanggal_lahir
+	user.Jenis_kelamin = 
 }
