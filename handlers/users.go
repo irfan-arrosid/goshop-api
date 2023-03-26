@@ -116,5 +116,19 @@ func UserUpdate(c *fiber.Ctx) error {
 	}
 	user.Notelp = userRequest.Notelp
 	user.Tanggal_lahir = userRequest.Tanggal_lahir
-	user.Jenis_kelamin = 
+	user.Jenis_kelamin = userRequest.Jenis_kelamin
+	user.Tentang = userRequest.Tentang
+	user.Pekerjaan = userRequest.Pekerjaan
+
+	errUpdate := database.DB.Save(&user).Error
+	if errUpdate != nil {
+		return c.Status(500).JSON(fiber.Map{
+			"message": "Internal server error",
+			"data":    user,
+		})
+	}
+	return c.JSON(fiber.Map{
+		"message": "User update success",
+		"data":    user,
+	})
 }
