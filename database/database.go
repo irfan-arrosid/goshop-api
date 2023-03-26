@@ -2,6 +2,7 @@ package database
 
 import (
 	"fmt"
+	"os"
 
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
@@ -10,8 +11,7 @@ import (
 var DB *gorm.DB
 
 func DbConnect() {
-	dsn := "irfanarrosid:my04sql04@tcp(localhost:3306)/goshop?charset=utf8mb4&parseTime=True&loc=Local"
-	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
+	db, err := gorm.Open(mysql.Open(os.Getenv("DSN_MYSQL")), &gorm.Config{})
 
 	if err != nil {
 		fmt.Println("Connection database is failed.")
