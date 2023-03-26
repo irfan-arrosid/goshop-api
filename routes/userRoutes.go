@@ -8,4 +8,5 @@ import (
 
 func UserRoutes(r *fiber.App) {
 	r.Post("/user", handlers.UserCreate)
+	r.Get("user", handlers.UserGetAll)
 }

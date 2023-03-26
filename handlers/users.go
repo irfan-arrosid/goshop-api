@@ -60,3 +60,15 @@ func UserCreate(c *fiber.Ctx) error {
 		"message": "Data successfully stored",
 	})
 }
+
+func UserGetAll(c *fiber.Ctx) error {
+	userInfo := c.Locals("userInfo")
+	log.Println("user info data :: ", userInfo)
+
+	var users []entities.User
+	result := database.DB.Find(&users)
+	if result.Error != nil {
+		log.Println(result.Error)
+	}
+	return c.JSON(users)
+}
