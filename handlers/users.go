@@ -6,9 +6,11 @@ import (
 	"goshop-api/models/requests"
 	"goshop-api/utils"
 	"log"
+	"time"
 
 	"github.com/go-playground/validator/v10"
 	"github.com/gofiber/fiber/v2"
+	"github.com/golang-jwt/jwt/v5"
 )
 
 func UserCreate(c *fiber.Ctx) error {
@@ -197,5 +199,59 @@ func UserDelete(c *fiber.Ctx) error {
 
 	return c.JSON(fiber.Map{
 		"message": "User was deleted",
+	})
+}
+
+func UserLogin(c *fiber.Ctx) error {
+	loginRequest := new(requests.UserLoginRequest)
+	if err := c.BodyParser(loginRequest); err != nil {
+		log.Println(loginRequest)
+
+		validate := validator.New()
+		errValidate := validate.Struct(loginRequest)
+		if errValidate != nil {
+			return c.Status(400).JSON(fiber.Map{
+				"message": "Validate is failed",
+				"error":   errValidate.Error(),
+			})
+		}
+	}
+
+	var user entities.User
+	err := database.DB.First(&user, "email = ?", loginRequest.Email).Error
+	if err != nil {
+		return c.Status(fiber.StatusUnauthorized).JSON(fiber.Map{
+			"message": "Wrong credential",
+		})
+	}
+
+	isValid := utils.CheckPasswordHash(loginRequest.Kata_sandi, user.Kata_sandi)
+	if !isValid {
+		return c.Status(fiber.StatusUnauthorized).JSON(fiber.Map{
+			"message": "Wrong credential",
+		})
+	}
+
+	claims := jwt.MapClaims{}
+	claims["nama"] = user.Nama
+	claims["email"] = user.Email
+	claims["exp"] = time.Now().Add(time.Hour * 2).Unix()
+
+	if user.Email == "goshop@gmail.com" {
+		claims["role"] = "admin"
+	} else {
+		claims["role"] = "user"
+	}
+
+	token, errGenerateToken := utils.GenerateToken(&claims)
+	if errGenerateToken != nil {
+		log.Println(errGenerateToken)
+		return c.Status(fiber.StatusUnauthorized).JSON(fiber.Map{
+			"message": "Wrong credential",
+		})
+	}
+
+	return c.JSON(fiber.Map{
+		"token": token,
 	})
 }

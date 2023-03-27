@@ -30,3 +30,8 @@ type UserUpdateRequest struct {
 type UserEmailRequest struct {
 	Email string `json:"email" validate:"required"`
 }
+
+type UserLoginRequest struct {
+	Email      string `json:"email" validate:"required,email"`
+	Kata_sandi string `json:"kata_sandi" validate:"required"`
+}
