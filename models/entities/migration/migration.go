@@ -10,14 +10,14 @@ import (
 func RunMigration() {
 	err := database.DB.AutoMigrate(
 		&entities.User{},
-		// &entities.Alamat{},
-		// &entities.Category{},
-		// &entities.DetailTrx{},
-		// &entities.FotoProduk{},
-		// &entities.LogProduk{},
-		// &entities.Produk{},
-		// &entities.Toko{},
-		// &entities.Trx{},
+		&entities.Alamat{},
+		&entities.Category{},
+		&entities.DetailTrx{},
+		&entities.FotoProduk{},
+		&entities.LogProduk{},
+		&entities.Produk{},
+		&entities.Toko{},
+		&entities.Trx{},
 	)
 
 	if err != nil {
