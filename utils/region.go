@@ -42,3 +42,37 @@ func GetAllProvince() ([]models.Province, error) {
 
 	return responseObject, nil
 }
+
+func GetCityById(city_id string) (*models.City, error) {
+	response, err := http.Get(BASE_URL + "/regency/" + city_id + ".json")
+	if err != nil {
+		return nil, err
+	}
+
+	responseData, err := ioutil.ReadAll(response.Body)
+	if err != nil {
+		return nil, err
+	}
+
+	var responseObject models.City
+	json.Unmarshal(responseData, &responseObject)
+
+	return &responseObject, nil
+}
+
+func GetAllCity() ([]models.City, error) {
+	response, err := http.Get(BASE_URL + "/regency.json")
+	if err != nil {
+		return nil, err
+	}
+
+	responseData, err := ioutil.ReadAll(response.Body)
+	if err != nil {
+		return nil, err
+	}
+
+	var responseObject []models.City
+	json.Unmarshal(responseData, &responseObject)
+
+	return responseObject, nil
+}
