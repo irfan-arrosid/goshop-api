@@ -4,23 +4,23 @@ import (
 	"goshop-api/database"
 	"goshop-api/models/entities"
 	"goshop-api/models/requests"
-	"goshop-api/models/responses"
 	"log"
 
 	"github.com/gofiber/fiber/v2"
 )
 
 func CategoryGetAll(c *fiber.Ctx) error {
-	var categories []responses.Category
+	var categories []entities.Category
 	result := database.DB.Find(&categories)
 	if result.Error != nil {
 		log.Println(result.Error)
 	}
+
 	return c.JSON(categories)
 }
 
 func CategoryGetById(c *fiber.Ctx) error {
-	var categories responses.Category
+	var categories entities.Category
 	categoryId := c.Params("id")
 	err := database.DB.First(&categories, "id = ?", categoryId).Error
 	if err != nil {
@@ -29,10 +29,7 @@ func CategoryGetById(c *fiber.Ctx) error {
 		})
 	}
 
-	return c.JSON(fiber.Map{
-		"message": "Request is success",
-		"data":    categories,
-	})
+	return c.JSON(categories)
 }
 
 func CategoryCreate(c *fiber.Ctx) error {
@@ -59,7 +56,6 @@ func CategoryCreate(c *fiber.Ctx) error {
 
 func CategoryUpdate(c *fiber.Ctx) error {
 	categoryRequest := new(requests.CategoryCreateRequest)
-
 	if err := c.BodyParser(categoryRequest); err != nil {
 		return err
 	}
@@ -87,13 +83,13 @@ func CategoryUpdate(c *fiber.Ctx) error {
 	}
 
 	return c.JSON(fiber.Map{
-		"message": "User update success",
+		"message": "Category update success",
 		"data":    categories,
 	})
 }
 
 func CategoryDelete(c *fiber.Ctx) error {
-	var categories responses.Category
+	var categories entities.Category
 	categoryId := c.Params("id")
 	err := database.DB.First(&categories, "id = ?", categoryId).Error
 	if err != nil {

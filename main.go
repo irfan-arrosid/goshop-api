@@ -19,6 +19,7 @@ func main() {
 
 	routes.UserRoutes(app)
 	routes.CategoryRoutes(app)
+	routes.AlamatRoutes(app)
 
 	app.Listen(":8080")
 }

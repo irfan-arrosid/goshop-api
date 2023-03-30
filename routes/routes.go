@@ -7,6 +7,10 @@ import (
 	"github.com/gofiber/fiber/v2"
 )
 
+// func AuthRoutes
+// Post /register handlers.UserCreate
+// Post /login handlers.UserLogin
+
 func UserRoutes(r *fiber.App) {
 	r.Post("/user", handlers.UserCreate)
 	r.Get("/user", middleware.Auth, handlers.UserGetAll)
@@ -23,4 +27,12 @@ func CategoryRoutes(r *fiber.App) {
 	r.Post("/category", handlers.CategoryCreate)
 	r.Put("/category/:id", handlers.CategoryUpdate)
 	r.Delete("/category/:id", handlers.CategoryDelete)
+}
+
+func AlamatRoutes(r *fiber.App) {
+	r.Get("/user/alamat", handlers.AlamatGetAll)
+	r.Get("/user/alamat/:id", handlers.AlamatGetById)
+	r.Post("/user/alamat", handlers.AlamatCreate)
+	r.Put("/user/alamat/:id", handlers.AlamatUpdate)
+	r.Delete("user/alamat/:id", handlers.AlamatDelete)
 }
