@@ -16,3 +16,11 @@ func UserRoutes(r *fiber.App) {
 	r.Delete("/user/:id", handlers.UserDelete)
 	r.Post("/login", handlers.UserLogin)
 }
+
+func CategoryRoutes(r *fiber.App) {
+	r.Get("/category", handlers.CategoryGetAll)
+	r.Get("/category/:id", handlers.CategoryGetById)
+	r.Post("/category", handlers.CategoryCreate)
+	r.Put("/category/:id", handlers.CategoryUpdate)
+	r.Delete("/category/:id", handlers.CategoryDelete)
+}

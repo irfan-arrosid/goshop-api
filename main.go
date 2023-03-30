@@ -18,6 +18,7 @@ func main() {
 	app := fiber.New()
 
 	routes.UserRoutes(app)
+	routes.CategoryRoutes(app)
 
 	app.Listen(":8080")
 }
