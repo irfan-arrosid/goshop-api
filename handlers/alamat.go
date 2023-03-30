@@ -2,6 +2,7 @@ package handlers
 
 import (
 	"goshop-api/database"
+	"goshop-api/helpers"
 	"goshop-api/models/entities"
 	"goshop-api/models/requests"
 	"log"
@@ -39,12 +40,16 @@ func AlamatCreate(c *fiber.Ctx) error {
 		return err
 	}
 
+	idUser := helpers.GetUserIDFromLocals(c)
+
 	newAlamat := entities.Alamat{
 		Judul_alamat:  alamatRequest.Judul_alamat,
 		Nama_penerima: alamatRequest.Nama_penerima,
 		Notelp:        alamatRequest.Notelp,
 		Detail_alamat: alamatRequest.Detail_alamat,
 	}
+
+	newAlamat.Id_user = idUser
 
 	errCreateAlamat := database.DB.Create(&newAlamat).Error
 	if errCreateAlamat != nil {
