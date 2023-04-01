@@ -71,6 +71,8 @@ func AlamatUpdate(c *fiber.Ctx) error {
 
 	var alamat entities.Alamat
 	alamatId := c.Params("id")
+	// idUser := helpers.GetUserIDFromLocals(c)
+	// condition := fmt.Sprintf("id_user = %d AND id = %d", idUser, alamatId)
 
 	err := database.DB.First(&alamat, "id = ?", alamatId).Error
 	if err != nil {

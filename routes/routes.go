@@ -36,3 +36,18 @@ func AlamatRoutes(r *fiber.App) {
 	r.Put("/user/alamat/:id", handlers.AlamatUpdate)
 	r.Delete("user/alamat/:id", handlers.AlamatDelete)
 }
+
+func TokoRoutes(r *fiber.App) {
+	r.Get("/toko", handlers.TokoGetAll)
+	r.Get("/toko/:id", handlers.TokoGetById)
+	r.Get("/toko/my", handlers.GetMyToko)
+	r.Put("/toko/:id", handlers.TokoUpdate)
+}
+
+func ProdukRoutes(r *fiber.App) {
+	r.Get("/produk")
+	r.Get("/produk/:id")
+	r.Post("/produk")
+	r.Put("/produk/:id")
+	r.Delete("/produk/:id")
+}
