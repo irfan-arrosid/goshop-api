@@ -49,7 +49,7 @@ func TokoGetById(c *fiber.Ctx) error {
 	err := database.DB.First(&toko, "id = ?", tokoId).Error
 	if err != nil {
 		return c.Status(404).JSON(fiber.Map{
-			"message": "Alamat does not exist",
+			"message": "Toko does not exist",
 		})
 	}
 

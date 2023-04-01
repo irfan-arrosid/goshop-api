@@ -10,9 +10,10 @@ import (
 	"github.com/gofiber/fiber/v2"
 )
 
-func AlamatGetAll(c *fiber.Ctx) error {
+func GetMyAlamat(c *fiber.Ctx) error {
 	var alamat []entities.Alamat
-	result := database.DB.Find(&alamat)
+	idUser := helpers.GetUserIDFromLocals(c)
+	result := database.DB.Find(&alamat, "id_user", idUser)
 	if result.Error != nil {
 		log.Println(result.Error)
 	}

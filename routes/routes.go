@@ -30,7 +30,7 @@ func CategoryRoutes(r *fiber.App) {
 }
 
 func AlamatRoutes(r *fiber.App) {
-	r.Get("/user/alamat", handlers.AlamatGetAll)
+	r.Get("/user/alamat", handlers.GetMyAlamat)
 	r.Get("/user/alamat/:id", handlers.AlamatGetById)
 	r.Post("/user/alamat", handlers.AlamatCreate)
 	r.Put("/user/alamat/:id", handlers.AlamatUpdate)
@@ -45,9 +45,9 @@ func TokoRoutes(r *fiber.App) {
 }
 
 func ProdukRoutes(r *fiber.App) {
-	r.Get("/produk")
-	r.Get("/produk/:id")
-	r.Post("/produk")
+	r.Get("/produk", handlers.ProdukGetAll)
+	r.Get("/produk/:id", handlers.ProdukGetById)
+	r.Post("/produk", handlers.ProdukCreate)
 	r.Put("/produk/:id")
 	r.Delete("/produk/:id")
 }

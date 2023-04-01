@@ -20,6 +20,8 @@ func main() {
 	routes.UserRoutes(app)
 	routes.CategoryRoutes(app)
 	routes.AlamatRoutes(app)
+	routes.TokoRoutes(app)
+	routes.ProdukRoutes(app)
 
 	app.Listen(":8080")
 }
