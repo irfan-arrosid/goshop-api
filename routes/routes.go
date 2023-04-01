@@ -60,7 +60,7 @@ func RegionRoutes(r *fiber.App) {
 }
 
 func TrxRoutes(r *fiber.App) {
-	r.Get("/trx")
-	r.Get("/trx/:id")
-	r.Post("/trx")
+	r.Get("/trx", handlers.TrxGetAll)
+	r.Get("/trx/:id", handlers.TrxGetById)
+	// r.Post("/trx")
 }
