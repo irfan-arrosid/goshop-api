@@ -48,6 +48,19 @@ func ProdukRoutes(r *fiber.App) {
 	r.Get("/produk", handlers.ProdukGetAll)
 	r.Get("/produk/:id", handlers.ProdukGetById)
 	r.Post("/produk", handlers.ProdukCreate)
-	r.Put("/produk/:id")
-	r.Delete("/produk/:id")
+	r.Put("/produk/:id", handlers.ProdukUpdate)
+	r.Delete("/produk/:id", handlers.ProdukDelete)
+}
+
+func RegionRoutes(r *fiber.App) {
+	r.Get("/region/provinsi", handlers.ProvinceGetAll)
+	r.Get("/region/provinsi/:id", handlers.ProvinceGetById)
+	r.Get("/region/kota", handlers.CityGetAll)
+	r.Get("/region/kota/:id", handlers.CityGetById)
+}
+
+func TrxRoutes(r *fiber.App) {
+	r.Get("/trx")
+	r.Get("/trx/:id")
+	r.Post("/trx")
 }

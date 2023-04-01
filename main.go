@@ -22,6 +22,8 @@ func main() {
 	routes.AlamatRoutes(app)
 	routes.TokoRoutes(app)
 	routes.ProdukRoutes(app)
+	routes.RegionRoutes(app)
+	routes.TrxRoutes(app)
 
 	app.Listen(":8080")
 }

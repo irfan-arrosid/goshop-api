@@ -9,7 +9,7 @@ import (
 
 const BASE_URL = "https://emsifa.github.io/api-wilayah-indonesia/api"
 
-func GetProvinceById(province_id string) (*models.Province, error) {
+func ProvinceGetById(province_id string) (*models.Province, error) {
 	response, err := http.Get(BASE_URL + "/province/" + province_id + ".json")
 	if err != nil {
 		return nil, err
@@ -26,7 +26,7 @@ func GetProvinceById(province_id string) (*models.Province, error) {
 	return &responseObject, nil
 }
 
-func GetAllProvince() ([]models.Province, error) {
+func ProvinceGetAll() ([]models.Province, error) {
 	response, err := http.Get(BASE_URL + "/province.json")
 	if err != nil {
 		return nil, err
@@ -43,7 +43,7 @@ func GetAllProvince() ([]models.Province, error) {
 	return responseObject, nil
 }
 
-func GetCityById(city_id string) (*models.City, error) {
+func CityGetById(city_id string) (*models.City, error) {
 	response, err := http.Get(BASE_URL + "/regency/" + city_id + ".json")
 	if err != nil {
 		return nil, err
@@ -60,7 +60,7 @@ func GetCityById(city_id string) (*models.City, error) {
 	return &responseObject, nil
 }
 
-func GetAllCity() ([]models.City, error) {
+func CityGetAll() ([]models.City, error) {
 	response, err := http.Get(BASE_URL + "/regency.json")
 	if err != nil {
 		return nil, err

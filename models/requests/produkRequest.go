@@ -5,7 +5,7 @@ import (
 	"strings"
 )
 
-type ProdukCreateRequest struct {
+type Produk struct {
 	Nama_produk    string `gorm:"type:varchar(255);index" json:"nama_produk"`
 	Harga_reseller string `gorm:"type:varchar(255)" json:"harga_reseller"`
 	Harga_konsumen string `gorm:"type:varchar(255)" json:"harga_konsumen"`
@@ -14,7 +14,7 @@ type ProdukCreateRequest struct {
 	Id_category    uint   `gorm:"type:varchar(255);index" json:"id_category"`
 }
 
-func (r *ProdukCreateRequest) MapRequest(foto []entities.FotoProduk) *entities.Produk {
+func (r *Produk) MapRequest(foto []entities.FotoProduk) *entities.Produk {
 	slug := strings.ToLower(strings.ReplaceAll(r.Nama_produk, " ", "-"))
 	return &entities.Produk{
 		Nama_produk:    r.Nama_produk,
