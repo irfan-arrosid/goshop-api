@@ -2,6 +2,7 @@ package product
 
 type Service interface {
 	NewCategory(input CreateCategoryInput) (Category, error)
+	GetCategories() ([]Category, error)
 }
 
 type service struct {
@@ -22,4 +23,13 @@ func (s *service) NewCategory(input CreateCategoryInput) (Category, error) {
 	}
 
 	return newCategory, nil
+}
+
+func (s *service) GetCategories() ([]Category, error) {
+	categories, err := s.repository.FindAllCategory()
+	if err != nil {
+		return categories, err
+	}
+
+	return categories, nil
 }

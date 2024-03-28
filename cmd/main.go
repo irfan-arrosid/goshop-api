@@ -38,6 +38,7 @@ func main() {
 
 	// PRODUCT endpoints
 	api.POST("/categories", productHandler.NewCategory)
+	api.GET("/categories", productHandler.GetCategories)
 
 	r.Run(os.Getenv("PORT"))
 }

@@ -43,3 +43,18 @@ func (h *productHandler) NewCategory(c *gin.Context) {
 
 	c.JSON(http.StatusOK, response)
 }
+
+func (h *productHandler) GetCategories(c *gin.Context) {
+	categories, err := h.productService.GetCategories()
+	if err != nil {
+		response := helper.APIResponse("Error to get categories", http.StatusBadRequest, "error", nil)
+
+		c.JSON(http.StatusBadRequest, response)
+		return
+	}
+
+	formatter := product.FormatCategories(categories)
+	response := helper.APIResponse("Successfully get categories", http.StatusOK, "success", formatter)
+
+	c.JSON(http.StatusOK, response)
+}
